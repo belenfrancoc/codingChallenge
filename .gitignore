@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Cypress cache & artifacts
+.cypress/
+cypress/videos/
+cypress/screenshots/
+
+# Mac system files
+.DS_Store
+
+# Env files
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE/editor config files
+.vscode/
+.idea/
