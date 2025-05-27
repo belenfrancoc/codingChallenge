@@ -18,10 +18,14 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies and Cypress binary
-        run: |
-          npm install
-          npx cypress install
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Cypress binary
+        run: npx cypress install
+
+      - name: Verify Cypress binary
+        run: npx cypress verify
 
       - name: Run Cypress tests (API + E2E)
         run: npx cypress run --spec "cypress/e2e/**/*.cy.js"
