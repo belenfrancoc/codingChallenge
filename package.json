@@ -1,0 +1,19 @@
+{
+  "name": "coding_challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^14.4.0",
+    "eslint": "^9.27.0",
+    "prettier": "^3.5.3"
+  }
+}
