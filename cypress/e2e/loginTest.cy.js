@@ -12,12 +12,12 @@ it('Login with valid credentials', () => {
 
     loginPage.login(loginUsers.valid.username, loginUsers.valid.password)
 
-  })
+})
 
-  it('Login fails with invalid credentials', () => {
+it('Login fails with invalid credentials', () => {
 
     loginPage.invalidLogin(loginUsers.invalid.username, loginUsers.invalid.password)
 
   
-  })
+})
 })
