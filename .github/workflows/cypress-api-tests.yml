@@ -1,4 +1,4 @@
-name: Run All Cypress Tests
+name: Run Cypress Tests
 
 on:
   push:
@@ -6,17 +6,25 @@ on:
       - main
 
 jobs:
-  run-cypress-tests:
+  cypress-run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-cache-${{ runner.os }}
 
       - name: Install dependencies
         run: npm install
