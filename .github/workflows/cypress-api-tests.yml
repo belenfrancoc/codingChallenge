@@ -8,8 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,9 +21,6 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome
-          headless: true
           spec: cypress/e2e/**/*.cy.js
-          start: npm start
-          wait-on: http://localhost:3000
-          wait-on-timeout: 60
+          browser: chrome
+          headed: false
