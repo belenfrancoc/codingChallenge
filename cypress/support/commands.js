@@ -21,11 +21,22 @@ Cypress.Commands.add('addNewPet', (name, status) => {
   });
 });
 
-Cypress.Commands.add('getPetByID', (id) => {
-  PetsApi.getPetByID(id).then((response) => {
-    expect(response.status).to.eq(200);
-    expect(response.body).to.have.property('id', id);
-  });
+Cypress.Commands.add('getPetByID', (id, retries = 6) => {
+  function attempt(remaining) {
+    return PetsApi.getPetByID(id).then((response) => {
+      try {
+        expect(response.status).to.eq(200);
+        expect(response.body).to.have.property('id', id);
+      } catch (err) {
+        if (remaining > 1) {
+          cy.wait(1000);
+          return attempt(remaining - 1);
+        }
+        throw err;
+      }
+    });
+  }
+  return attempt(retries);
 });
 
 Cypress.Commands.add('updatePetByID', (id, name, status) => {
@@ -33,7 +44,7 @@ Cypress.Commands.add('updatePetByID', (id, name, status) => {
     expect(response.status).to.eq(200);
     expect(response.body).to.have.property('code', 200);
     expect(response.body).to.have.property('type', 'unknown');
-    expect(response.body).to.have.property('message', `${id}`); 
+    expect(response.body).to.have.property('message', `${id}`);
   });
 });
 
