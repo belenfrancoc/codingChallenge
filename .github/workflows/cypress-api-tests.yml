@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,5 +23,5 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           spec: cypress/e2e/**/*.cy.js
-          browser: chrome
-          headed: false
+          browser: chrome    
+          headed: false     
