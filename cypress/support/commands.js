@@ -1,16 +1,22 @@
+
 import { PetsApi } from "../requests/PetsApi";
 import petInformation from "../testData/APITestData/apiTestData";
 
 
 function retry(fn, retries = 6, delay = 1000) {
-  return fn().catch((err) => {
-    if (retries > 1) {
-      cy.wait(delay);
-      return retry(fn, retries - 1, delay);
+  return fn().then(
+    
+    (res) => res,
+    (err) => {
+      if (retries > 1) {
+        cy.wait(delay);
+        return retry(fn, retries - 1, delay);
+      }
+      throw err;
     }
-    throw err;
-  });
+  );
 }
+
 
 Cypress.Commands.add("addNewPet", (name, status, retries = 6) => {
   const id = petInformation.id;
@@ -27,12 +33,8 @@ Cypress.Commands.add("addNewPet", (name, status, retries = 6) => {
           expect(response.body).to.have.property("status", status);
         }
 
-        expect(response.body)
-          .to.have.property("photoUrls")
-          .and.be.an("array");
-        expect(response.body)
-          .to.have.property("tags")
-          .and.be.an("array");
+        expect(response.body).to.have.property("photoUrls").and.be.an("array");
+        expect(response.body).to.have.property("tags").and.be.an("array");
       }),
     retries
   );
@@ -49,6 +51,7 @@ Cypress.Commands.add("getPetByID", (id, retries = 6) => {
     retries
   );
 });
+
 
 Cypress.Commands.add("updatePetByID", (id, name, status, retries = 6) => {
   return retry(
